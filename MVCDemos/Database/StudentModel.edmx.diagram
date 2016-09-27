@@ -4,8 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9dadeb6655e94114a14d9ac322400d07" Name="Diagram1">
-        <EntityTypeShape EntityType="XML_to_DATABASEModel.Table" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="73da29f612f240e38815a943ecd6bab5" Name="Diagram1">
+        <EntityTypeShape EntityType="XML_to_DATABASEModel.School" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="XML_to_DATABASEModel.Student" Width="1.5" PointX="9.125" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="XML_to_DATABASEModel.FK__Student__SchoolI__60A75C0F" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

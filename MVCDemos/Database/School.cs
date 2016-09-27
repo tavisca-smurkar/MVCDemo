@@ -12,10 +12,18 @@ namespace MVCDemos.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Table
+    public partial class School
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public School()
+        {
+            this.Students = new HashSet<Student>();
+        }
+    
         public int Id { get; set; }
-        public string Fname { get; set; }
-        public string Lname { get; set; }
+        public string SchoolName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

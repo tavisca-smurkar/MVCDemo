@@ -11,107 +11,112 @@ using MVCDemos.Database;
 
 namespace MVCDemos.Controllers
 {
-    public class ManageStudentController : Controller
+    public class StudentsController : Controller
     {
-        private XML_to_DATABASEEntities1 db = new XML_to_DATABASEEntities1();
+        private XML_to_DATABASEEntities2 db = new XML_to_DATABASEEntities2();
 
-        // GET: ManageStudent
+        // GET: Students
         public async Task<ActionResult> Index()
         {
-            return View(await db.Tables.ToListAsync());
+            var students = db.Students.Include(s => s.School);
+            return View(await students.ToListAsync());
         }
 
-        // GET: ManageStudent/Details/5
+        // GET: Students/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Table table = await db.Tables.FindAsync(id);
-            if (table == null)
+            Student student = await db.Students.FindAsync(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(table);
+            return View(student);
         }
 
-        // GET: ManageStudent/Create
+        // GET: Students/Create
         public ActionResult Create()
         {
+            ViewBag.SchoolId = new SelectList(db.Schools, "Id", "SchoolName");
             return View();
         }
 
-        // POST: ManageStudent/Create
+        // POST: Students/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Fname,Lname")] Table table)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Fname,Lname,SchoolId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Tables.Add(table);
+                db.Students.Add(student);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(table);
+            ViewBag.SchoolId = new SelectList(db.Schools, "Id", "SchoolName", student.SchoolId);
+            return View(student);
         }
 
-        // GET: ManageStudent/Edit/5
+        // GET: Students/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Table table = await db.Tables.FindAsync(id);
-            if (table == null)
+            Student student = await db.Students.FindAsync(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(table);
+            ViewBag.SchoolId = new SelectList(db.Schools, "Id", "SchoolName", student.SchoolId);
+            return View(student);
         }
 
-        // POST: ManageStudent/Edit/5
+        // POST: Students/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Fname,Lname")] Table table)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Fname,Lname,SchoolId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(table).State = EntityState.Modified;
+                db.Entry(student).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(table);
+            ViewBag.SchoolId = new SelectList(db.Schools, "Id", "SchoolName", student.SchoolId);
+            return View(student);
         }
 
-        // GET: ManageStudent/Delete/5
+        // GET: Students/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Table table = await db.Tables.FindAsync(id);
-            if (table == null)
+            Student student = await db.Students.FindAsync(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(table);
+            return View(student);
         }
 
-        // POST: ManageStudent/Delete/5
+        // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Table table = await db.Tables.FindAsync(id);
-            db.Tables.Remove(table);
+            Student student = await db.Students.FindAsync(id);
+            db.Students.Remove(student);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

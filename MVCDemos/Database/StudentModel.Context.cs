@@ -13,10 +13,10 @@ namespace MVCDemos.Database
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class XML_to_DATABASEEntities1 : DbContext
+    public partial class XML_to_DATABASEEntities2 : DbContext
     {
-        public XML_to_DATABASEEntities1()
-            : base("name=XML_to_DATABASEEntities1")
+        public XML_to_DATABASEEntities2()
+            : base("name=XML_to_DATABASEEntities2")
         {
         }
     
@@ -25,6 +25,7 @@ namespace MVCDemos.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
     }
 }
